@@ -26,6 +26,14 @@ class Squad:
         self.first_team = first_team
         self.substitutes = substitutes
 
+    def __eq__(self, other):
+        if isinstance(other, Squad):
+            player_ids = list(map(lambda x: x.identifier, self.first_team + self.substitutes))
+            other_player_ids = list(map(lambda x: x.identifier, other.first_team + other.substitutes))
+            return all(player_id in player_ids for player_id in other_player_ids)
+        else:
+            return False
+
     def no_of_players_in_position(self, position: str) -> int:
         return self.no_of_subs_in_position(position) + self.no_of_starters_in_position(position)
 

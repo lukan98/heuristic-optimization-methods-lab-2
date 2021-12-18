@@ -29,12 +29,15 @@ file.write(",".join(subs))
 file.close()
 
 tabu_search = TabuSearch(instance=players, starting_solution=squad, budget=100)
-neighborhood = tabu_search.generate_neighbors(squad)
 
-best_neighbor = squad
-for neighbor in neighborhood:
-    if neighbor.get_total_points() > squad.get_total_points():
-        best_neighbor = neighbor
+neighbors = tabu_search.generate_neighbors(squad)
 
-for starter in best_neighbor.first_team:
-    print(str(starter.identifier))
+tabu_search_result = tabu_search.run(500, verbose=True)
+
+file = open("tabu_search.txt", "w")
+first_team = list(map(lambda x: str(x.identifier), tabu_search_result.first_team))
+subs = list(map(lambda x: str(x.identifier), tabu_search_result.substitutes))
+file.write(",".join(first_team))
+file.write("\n")
+file.write(",".join(subs))
+file.close()

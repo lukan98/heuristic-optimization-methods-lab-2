@@ -15,8 +15,16 @@ class Player:
 
 
 class Squad:
-    first_team: [Player] = []
-    substitutes: [Player] = []
+    first_team: [Player]
+    substitutes: [Player]
+
+    def __init__(self, first_team=None, substitutes=None):
+        if substitutes is None:
+            substitutes = []
+        if first_team is None:
+            first_team = []
+        self.first_team = first_team
+        self.substitutes = substitutes
 
     def no_of_players_in_position(self, position: str) -> int:
         return self.no_of_subs_in_position(position) + self.no_of_starters_in_position(position)
@@ -49,8 +57,22 @@ class Squad:
         return
 
     def least_efficient_starter(self) -> Player:
-        sorted_by_efficiency = sorted(self.first_team, key=lambda player: player.points/player.price)
+        sorted_by_efficiency = sorted(self.first_team, key=lambda player: player.points / player.price)
         return sorted_by_efficiency[0]
 
     def starters_by_lowest_efficiency(self) -> [Player]:
-        return sorted(self.first_team, key=lambda player: player.points/player.price)
+        return sorted(self.first_team, key=lambda player: player.points / player.price)
+
+    def get_club_avoidlist(self, max_num=3) -> [str]:
+        club_avoidlist = []
+        for club in list(map(lambda x: x.club, self.first_team + self.substitutes)):
+            if list(map(lambda x: x.club, self.first_team + self.substitutes)).count(club) == 3:
+                club_avoidlist.append(club)
+
+        return club_avoidlist
+
+    def get_total_price(self) -> float:
+        return sum(map(lambda x: x.price, self.first_team + self.substitutes))
+
+    def get_total_points(self) -> float:
+        return sum(map(lambda x: x.points, self.first_team))

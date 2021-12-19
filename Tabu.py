@@ -2,7 +2,7 @@ import math
 import random
 from models import *
 
-TABU_TENURE = int(math.sqrt(500))
+TABU_TENURE = int(math.sqrt(250))
 
 
 class TabuMove:

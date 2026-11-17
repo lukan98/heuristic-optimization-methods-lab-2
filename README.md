@@ -27,8 +27,14 @@ Positions are `GK`, `DEF`, `MID` and `FW`.
 
 ## Requirements
 
-- Python 3.8 or newer
-- No external packages
+- Python 3.11.9 (pinned in `.tool-versions`; the code requires 3.8 or newer)
+- No external packages — only the Python standard library
+
+Install the pinned Python version with asdf:
+
+```bash
+asdf install
+```
 
 ## Run
 
